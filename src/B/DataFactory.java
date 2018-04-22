@@ -1,4 +1,4 @@
-package A;
+package B;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -10,7 +10,7 @@ import static java.util.Arrays.deepToString;
 
 public class DataFactory {
     public static final String INPUT_FILE = "./bin/in.txt";
-    public static final String OUTPUT_FILE = "./src/A/a.in";
+    public static final String OUTPUT_FILE = "./src/B/b.in";
 
     static boolean LOCAL = System.getSecurityManager() == null;
     static boolean TO_FILE = true;
@@ -18,20 +18,16 @@ public class DataFactory {
 
     void run() {
         Random r = new Random();
-        for(int i = 1; i <= 30; i ++){
-            int a = r.nextInt(100);
-            int b = r.nextInt(100);
-            System.out.println(a + " " + b);
-        }
-        for(int i = 1; i <= 100; i ++){
-            int a = r.nextInt(1000);
-            int b = r.nextInt(1000);
-            System.out.println(a + " " + b);
-        }
-        for(int i = 1; i <= 30; i ++){
+        int T = 1000;
+        for (int i = 1; i <= T; i++){
             int a = r.nextInt(10000000);
             int b = r.nextInt(10000000);
-            System.out.println(a + " " + b);
+            if(b < a){
+                System.out.println(b + " " + a);
+            }
+            else {
+                System.out.println(a + " " + b);
+            }
         }
     }
     public void debug(Object ... objects){

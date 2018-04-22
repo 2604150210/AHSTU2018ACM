@@ -1,12 +1,16 @@
-package A;
+package B;
 
-import static java.util.Arrays.*;
-import java.io.*;
-import java.util.*;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.PrintStream;
+import java.util.ArrayList;
+import java.util.Scanner;
 
-public class A {
-    public static final String INPUT_FILE = "./src/A/a.in";
-    public static final String OUTPUT_FILE = "./src/A/a.out";
+import static java.util.Arrays.deepToString;
+
+public class B {
+    public static final String INPUT_FILE = "./src/B/b.in";
+    public static final String OUTPUT_FILE = "./src/B/b.out";
 
     static boolean LOCAL = System.getSecurityManager() == null;
     static boolean TO_FILE = true;
@@ -16,10 +20,18 @@ public class A {
         while (cin.hasNext()){
             int a = cin.nextInt();
             int b = cin.nextInt();
-            if( a == 0 && b == 0)break;
-            System.out.println(a+b);
+            int []rose = {1634, 8208, 9474};
+            int sum = 0;
+            for(int i = 0; i < rose.length; i++){
+                if (rose[i] >= a && rose[i] <= b){
+                    sum++;
+                }
+            }
+            System.out.println(sum);
         }
     }
+
+
     public void debug(Object ... objects){
         System.err.println(deepToString(objects));
     }
@@ -38,6 +50,6 @@ public class A {
                 TO_FILE = false;
             }
         }
-        new A().run();
+        new B().run();
     }
 }

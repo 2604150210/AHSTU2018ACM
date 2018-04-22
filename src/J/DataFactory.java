@@ -1,4 +1,4 @@
-package I;
+package J;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -10,48 +10,42 @@ import static java.util.Arrays.deepToString;
 
 public class DataFactory {
     public static final String INPUT_FILE = "./bin/in.txt";
-    public static final String OUTPUT_FILE = "./src/H/h2.in";
+    public static final String OUTPUT_FILE = "./src/J/j2.in";
 
     static boolean LOCAL = System.getSecurityManager() == null;
     static boolean TO_FILE = true;
     Scanner sc = new Scanner(System.in);
     Random r;
+
     void run() {
         r = new Random();
         int T = 10;
-        for (int k = 1; k <= T; k++){
-            int n = r.nextInt(50);
-            if (n < 3)continue;
-            System.out.println(n);
-            int [][] a = new int[n][n];
-            for(int i = 0; i < n; i ++){
-                for(int j = 0; j <i; j++){
-                    a[i][j] = r.nextInt(1000) + 1;
-                    a[j][i] = a[i][j];
+        for (int k = 1; k <= T; k++) {
+            int m = r.nextInt(100)+1;
+            int n = r.nextInt(10)+1;
+            System.out.println(m + " " + n);
+            char[][]chars = new char[m][n];
+            for (int i = 0; i < m; i++){
+                for(int j = 0; j < n; j++){
+                    boolean y = r.nextBoolean();
+                    if (y){
+                        chars[i][j] = 'H';
+                    }else {
+                        chars[i][j] = 'P';
+                    }
                 }
             }
-            for(int i = 0; i < n; i++){
-                String str = "";
-                str += a[i][0];
-                for(int j = 1; j < n; j++){
-                    str += " " + a[i][j];
-                }
-                System.out.println(str);
-            }
-            int q = r.nextInt(n * (n + 1) / 2) + 1;
-            System.out.println(q);
-            for(int i = 1; i <= q; i++){
-                int x = r.nextInt(n) + 1;
-                int b = r.nextInt(n) + 1;
-                System.out.println(x + " " + b);
+            for (int i = 0; i < m; i++){
+                System.out.println(String.valueOf(chars[i]));
             }
         }
 
     }
 
-    public void debug(Object ... objects){
+    public void debug(Object... objects) {
         System.err.println(deepToString(objects));
     }
+
     public static void main(String[] args) {
         if (LOCAL) {
             try {

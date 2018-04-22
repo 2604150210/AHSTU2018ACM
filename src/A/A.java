@@ -5,16 +5,22 @@ import java.io.*;
 import java.util.*;
 
 public class A {
-    public static final String INPUT_FILE = "./src/a.in";
-    public static final String OUTPUT_FILE = "./src/a.in";
+    public static final String INPUT_FILE = "./src/A/a.in";
+    public static final String OUTPUT_FILE = "./src/A/a.out";
 
     static boolean LOCAL = System.getSecurityManager() == null;
     static boolean TO_FILE = true;
-    Scanner sc = new Scanner(System.in);
+    Scanner cin = new Scanner(System.in);
 
     void run() {
-        for (int i = 1; i <= 10; i++)
-        System.out.println(i);
+        while (cin.hasNext()){
+            int a = cin.nextInt();
+            int b = cin.nextInt();
+            if( a == 0 && b == 0)break;
+            if((a+b)%7==0)
+            System.out.println(7);
+            else System.out.println((a+b)%7);
+        }
     }
     public void debug(Object ... objects){
         System.err.println(deepToString(objects));

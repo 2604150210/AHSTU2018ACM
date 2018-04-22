@@ -1,4 +1,4 @@
-package B;
+package C;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -10,40 +10,23 @@ import static java.util.Arrays.deepToString;
 
 public class DataFactory {
     public static final String INPUT_FILE = "./bin/in.txt";
-    public static final String OUTPUT_FILE = "./src/B/B.in";
+    public static final String OUTPUT_FILE = "./src/C/c3.in";
 
     static boolean LOCAL = System.getSecurityManager() == null;
     static boolean TO_FILE = true;
     Scanner sc = new Scanner(System.in);
 
     void run() {
+
         Random r = new Random();
-        for(int i = 1; i <= 30; i ++){
-            int a = r.nextInt(100);
-            int b = r.nextInt(100);
-            if (a <= b)
-            System.out.println(a + " " + b);
+        int T = r.nextInt(10);
+        System.out.println(T);
+        for(int i = 1; i <= T; i ++){
+            int n = r.nextInt(100);
+            int m = r.nextInt(100);
+            System.out.println(n + " " + m);
         }
-        for(int i = 1; i <= 100; i ++){
 
-            int a = r.nextInt(1000);
-            int b = r.nextInt(1000);
-            if(a <= b)
-            System.out.println(a + " " + b);
-        }
-        for(int i = 1; i <= 30; i ++){
-            int a = r.nextInt(1000000007);
-            int b = r.nextInt(1000000007);
-            if(a <= b)
-            System.out.println(a + " " + b);
-        }
-        for(int i = 1; i <= 100; i ++){
-
-            int a = r.nextInt(100);
-            int b = r.nextInt(1000);
-            if(a <= b)
-                System.out.println(a + " " + b);
-        }
     }
     public void debug(Object ... objects){
         System.err.println(deepToString(objects));

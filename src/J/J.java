@@ -1,4 +1,4 @@
-package I;
+package J;
 
 /**
  * Created by jal on 2018/4/13 0013.
@@ -7,57 +7,117 @@ package I;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.PrintStream;
+import java.util.Arrays;
 import java.util.Scanner;
 
 import static java.util.Arrays.deepToString;
 
-public class I {
-    public static final String INPUT_FILE = "./src/I/i2.in";
-    public static final String OUTPUT_FILE = "./src/I/i2.out";
+public class J {
+    public static final String INPUT_FILE = "./src/J/j.in";
+    public static final String OUTPUT_FILE = "./src/J/j.out";
 
     static boolean LOCAL = System.getSecurityManager() == null;
     static boolean TO_FILE = true;
     Scanner cin = new Scanner(System.in);
-    private int n;
-    private int count = 0;
-    private int[][]out;
-    private int[]vis;
-    void run() {
-        count = 0;
-        n = cin.nextInt();
-        out = new int[1000][n];
-        vis = new int[n];
-        dfs(0);
-        System.out.println(count);
-        for(int i = 0; i < count; i++){
-            for (int j = 0; j < n; j++){
-                System.out.print(out[i][j]);
-            }
-            System.out.println();
+    int N,M;
+    final int maxStateNumber = 100,MAXN = 20,MAXM = 110;
+    char [][]mp;
+    int []num,state,cur;
+    int top;
+    int dp[][][];
+    boolean ok(int x){
+        if((x & (x<<1)) != 0)return true;
+        if((x & (x<<2)) != 0 )return false;
+        return false;
+    }
+    void init(){
+        top = 0;
+        int total = (1 << N);
+        for(int i = 0; i < total; i++){
+            if(ok(i))state[++top] = i;
         }
     }
-
-    private void dfs(int r) {
-        if( r >= n){
-            for(int i = 0; i < n; i++)
-                out[count][i] = vis[i];
-            count++;
+//计算x的二进制数的1的个数
+    int cnt(int x){
+        int ret = 0;
+        while(x != 0){
+            ret++;
+            x&=(x-1);
         }
-        for(int i = 0; i < n; i++){
-            if(check(r, i)){
-                vis[r] = i;
-                dfs(r+1);
-                vis[r] = -1;
-            }
-        }
+        return ret;
     }
-
-    private boolean check(int r, int c) {
-        for(int i = 0; i < r; i++){
-            if(vis[i] == c)return false;
-            if(vis[i] - c == i - r || vis[i] - c == r - i)return false;
-        }
+    boolean fit(int state,int x){
+        if((state&cur[x]) != 0)return false;
         return true;
+    }
+    void run() {
+
+        while (cin.hasNext()){
+
+            String s = cin.nextLine();
+            M = Integer.parseInt(s.split(" ")[0]);
+            N = Integer.parseInt(s.split(" ")[1]);
+            if(N==0&&M==0)break;
+            mp = new char[M+1][N+1];
+            num = new int[maxStateNumber];
+            state = new int[maxStateNumber];
+            cur = new int[MAXM];
+            dp = new int[MAXM][maxStateNumber][maxStateNumber];
+            init();
+            for(int i = 1; i <= M; i++){
+                String str = cin.nextLine();
+                str = "-" + str;
+                mp[i] = str.toCharArray().clone();
+            }
+            for(int i =1; i <= M; i++){
+                cur[i] = 0;
+                for(int j = 1; j <= N; j++){
+
+                    if(mp[i][j] == 'H')
+                        cur[i] +=(1 << (N-j));
+                }
+            }
+
+            for (int i = 0; i < dp.length; i++){
+                for (int j = 0; j < dp[0].length; j++){
+                    for (int k = 0; k < dp[0][0].length; k++){
+                        dp[i][j][k] = -1;
+                    }
+                }
+            }
+            //初始化第一行的状态
+            for(int i = 1; i <= top; i++){
+                num[i] = cnt(state[i]);//state是满足条件的行的状态，找出该状态的1的个数，即为可以放置的大炮的个数
+                if(fit(state[i],1)){//如果state[i]该状态可以放入第一行，则更细腻dp的值，否则dp仍为初始值-1
+                    for(int j = 1; j<=top; j++)
+                        dp[1][j][i] = num[i];
+                }
+            }
+            for(int i = 2; i <= M; i++){
+                for(int j = 1; j <= top; j++){
+                    if(!fit(state[j],i))continue;
+                    for(int k = 1; k <= top; k++){
+                        if(!fit(state[k],i-1))continue;
+                        if((state[j]&state[k])!= 0)continue;
+                        for(int t = 1; t <= top; t++){
+                            if(!fit(state[t],i-2))continue;
+                            if((state[j]&state[t])!= 0)continue;
+                            if((state[k]&state[t])!=0)continue;
+                            //if(dp[i-1][t][k] == -1)continue;
+                            dp[i][k][j] = Math.max(dp[i][k][j],dp[i-1][t][k] + num[j]);
+
+                        }
+                    }
+                }
+            }
+            int maxvalue = -1;
+            for(int i= 0; i <= top; i++){
+                for(int j = 0; j<= top; j++){
+                    maxvalue = Math.max(maxvalue,dp[M][i][j]);
+                }
+            }
+            System.out.println(maxvalue);
+        }
     }
 
     public void debug(Object ... objects){
@@ -78,6 +138,6 @@ public class I {
                 TO_FILE = false;
             }
         }
-        new I().run();
+        new J().run();
     }
 }

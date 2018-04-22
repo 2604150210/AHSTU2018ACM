@@ -1,40 +1,39 @@
-package C;
+package D;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.PrintStream;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 import static java.util.Arrays.deepToString;
 
-public class C {
-    public static final String INPUT_FILE = "./src/C/c3.in";
-    public static final String OUTPUT_FILE = "./src/C/c3.out";
+public class D {
+    public static final String INPUT_FILE = "./src/D/d.in";
+    public static final String OUTPUT_FILE = "./src/D/d.out";
 
     static boolean LOCAL = System.getSecurityManager() == null;
     static boolean TO_FILE = true;
     Scanner cin = new Scanner(System.in);
-
+    int []a;
     void run() {
+        a = new int[41];
+        a[0] = 0;
+        a[1] = 1;
+        a[2] = 1;
+        a[3] = 2;
+        for(int i = 4; i <= 40; i++){
+            a[i] = a[i-1] + a[i-3];
+        }
+        //debug(a);
         int T = cin.nextInt();
-        while (T-- > 0){
+        while (T-->0){
             int n = cin.nextInt();
-            int m = cin.nextInt();
-            if(m % 2 == 1){
-                System.out.println("No answer");
-                continue;
-            }
-            int y = m / 2 - n;
-            int x = n - y;
-            if(x < 0 || y < 0 ){
-                System.out.println("No answer");
-                continue;
-            }
-            System.out.println(x + " " + y);
+            System.out.println(a[n]);
         }
     }
-
+    /*int s(int n){
+        return n>2?s(n-1)+s(n-2):1;
+    }*/
     public void debug(Object ... objects){
         System.err.println(deepToString(objects));
     }
@@ -53,6 +52,6 @@ public class C {
                 TO_FILE = false;
             }
         }
-        new C().run();
+        new D().run();
     }
 }

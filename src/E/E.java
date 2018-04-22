@@ -1,4 +1,4 @@
-package D;
+package E;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -7,31 +7,31 @@ import java.util.Scanner;
 
 import static java.util.Arrays.deepToString;
 
-public class D {
-    public static final String INPUT_FILE = "./src/D/d.in";
-    public static final String OUTPUT_FILE = "./src/D/d.out";
+public class E {
+    public static final String INPUT_FILE = "./src/E/e10.in";
+    public static final String OUTPUT_FILE = "./src/E/e10.out";
 
     static boolean LOCAL = System.getSecurityManager() == null;
     static boolean TO_FILE = true;
     Scanner cin = new Scanner(System.in);
-    int []a;
     void run() {
-        a = new int[41];
-        a[0] = 0;
-        a[1] = 1;
-        for(int i = 2; i <= 40; i++){
-            a[i] = a[i-1] + a[i-2];
+        String a = cin.nextLine();
+        String b = cin.nextLine();
+        if(a.length() != b.length()){
+            System.out.println(1);
         }
-        debug(a);
-        int T = cin.nextInt();
-        while (T-->0){
-            int n = cin.nextInt();
-            System.out.println(a[n]);
+        else if (a.equals(b)){
+            System.out.println(2);
         }
+        else if (a.toUpperCase().equals(b.toUpperCase())){
+            System.out.println(3);
+        }
+        else if (a.toUpperCase().equals(new StringBuffer(b.toUpperCase()).reverse().toString())){
+            System.out.println(4);
+        }
+        System.out.println(5);
     }
-    /*int s(int n){
-        return n>2?s(n-1)+s(n-2):1;
-    }*/
+
     public void debug(Object ... objects){
         System.err.println(deepToString(objects));
     }
@@ -50,6 +50,6 @@ public class D {
                 TO_FILE = false;
             }
         }
-        new D().run();
+        new E().run();
     }
 }

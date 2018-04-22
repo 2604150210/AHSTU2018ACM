@@ -1,4 +1,4 @@
-package F;
+package G;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -6,35 +6,53 @@ import java.io.PrintStream;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Scanner;
+import java.util.Vector;
 
 import static java.util.Arrays.deepToString;
 
-public class F {
-    public static final String INPUT_FILE = "./src/F/f2.in";
-    public static final String OUTPUT_FILE = "./src/F/f2.out";
+public class G {
+    public static final String INPUT_FILE = "./src/G/g.in";
+    public static final String OUTPUT_FILE = "./src/G/g.out";
 
-    static boolean LOCAL = System.getSecurityManager() == null;
-    static boolean TO_FILE = true;
+    static boolean LOCAL = false;//System.getSecurityManager() == null;
+    static boolean TO_FILE = false;
     Scanner cin = new Scanner(System.in);
     void run() {
-        int n = Integer.parseInt(cin.nextLine());
-        String[] ids = new String[n];
-
-        for(int i = 0; i < n; i ++){
-            ids[i] = cin.nextLine();
-        }
-        Arrays.asList(ids);
-        Arrays.sort(ids, new Comparator<String>() {
-            @Override
-            public int compare(String o2, String o1) {
-                if(o1.substring(6, 14).equals(o2.substring(6, 14)) )
-                    return o1.compareTo(o2);
-                else
-                    return o1.substring(6, 14).compareTo(o2.substring(6, 14));
+        int t = Integer.parseInt(cin.nextLine());
+        while (t-->0){
+            char[]chars = cin.nextLine().toCharArray();
+            Vector<Integer>vector = new Vector<>();
+            vector.add(chars[0]-'0');
+            int i = 1;
+            int last = vector.lastElement();
+            int temp = 0;
+            String ts = "";
+            boolean over = false;
+            String s = ""+vector.get(0) + ",";
+            while (i < chars.length){
+                //s+=chars[i];
+                ts += chars[i];
+                temp = temp * 10 + chars[i] - '0';
+                if(temp > last){
+                    s += ts;
+                    ts = "";
+                    vector.add(temp);
+                    last = vector.lastElement();
+                    temp = 0;
+                    if (i != chars.length - 1){
+                        s+=",";
+                    }
+                     else {
+                        over = true;
+                    }
+                }
+                i++;
             }
-        });
-        for(int i = 0; i < n; i++ ){
-            System.out.println(ids[i]);
+            if(!over){
+                s = s.substring(0, s.length() - 1);
+                s += ts;
+            }
+            System.out.println(s);
         }
     }
 
@@ -56,6 +74,6 @@ public class F {
                 TO_FILE = false;
             }
         }
-        new F().run();
+        new G().run();
     }
 }
